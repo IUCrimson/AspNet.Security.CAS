@@ -2,10 +2,9 @@
     "version": "1.0.0-*",
     "description": "AspNet.Security.CAS Class Library",
     "authors": [ "IUF Development" ],
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": "",
-
+    "tags": [ "CAS", "Jasig", "Authentication", "Middleware" ],
+    "projectUrl": "https://github.com/IUCrimson/AspNet.Security.CAS",
+    "licenseUrl": "https://github.com/IUCrimson/AspNet.Security.CAS/blob/master/LICENSE.md",
     "dependencies": {
         "Microsoft.AspNet.Authentication": "1.0.0-rc1-final"
     },
