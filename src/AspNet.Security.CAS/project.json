@@ -1,0 +1,20 @@
+﻿{
+    "version": "1.0.0-*",
+    "description": "AspNet.Security.CAS Class Library",
+    "authors": [ "IUF Development" ],
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": "",
+
+    "dependencies": {
+        "Microsoft.AspNet.Authentication": "1.0.0-rc1-final"
+    },
+    "frameworks": {
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Net.Http": ""
+            }
+        },
+        "dnxcore50": { }
+    }
+}
