@@ -1,11 +1,11 @@
-AspNet.Security.CAS
+AspNetCore.Security.CAS
 ===================
 
-AspNet.Security.CAS is an [ASP.NET 5/MVC 6](http://docs.asp.net/en/1.0.0-rc1/) authentication provider for [CAS](https://github.com/Jasig/cas).
+AspNet.Security.CAS is an [ASP.NET Core 1/MVC 6](http://docs.asp.net/en/1.0.0-rc2/) authentication provider for [CAS](https://github.com/Jasig/cas).
 
 This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://github.com/noelbundick/Owin.Security.CAS) provider.
 
-[Microsoft.AspNet.Authentication.OAuth](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNet.Authentication.Twitter) and [Microsoft.AspNet.Authentication.Twitter](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNet.Authentication.Twitter) were used as structural references.
+[Microsoft.AspNetCore.Authentication.OAuth](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Twitter) and [Microsoft.AspNetCore.Authentication.Twitter](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Twitter) were used as structural references.
 
 ## Usage
 
@@ -19,9 +19,9 @@ This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://
 
 
     ```c#
-    app.UseCasAuthentication(options =>
+    app.UseCasAuthentication(new CasOptions
     {
-        options.CasServerUrlBase = "https://your.cas.server.com/cas";
+        CasServerUrlBase = "https://your.cas.server.com/cas"
     });
     ```
 
@@ -29,7 +29,7 @@ This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://
 
 At a minmum, the `CasOptions` object needs to have the `CasServerUrlBase` property set to the URL to your CAS server.
 
-These options extend the [RemoteAuthenticationOptions](https://github.com/aspnet/Security/blob/dev/src/Microsoft.AspNet.Authentication/RemoteAuthenticationOptions.cs) class.
+These options extend the [RemoteAuthenticationOptions](https://github.com/aspnet/Security/blob/master/src/Microsoft.AspNetCore.Authentication/RemoteAuthenticationOptions.cs) class.
 
 **Properties**
 
