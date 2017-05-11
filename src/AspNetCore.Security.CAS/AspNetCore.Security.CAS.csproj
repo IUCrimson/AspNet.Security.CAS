@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>AspNetCore.Security.CAS Class Library</Description>
+    <Authors>IUF Development</Authors>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <TargetFrameworks>net452;net461;netstandard1.5</TargetFrameworks>
+    <AssemblyName>AspNetCore.Security.CAS</AssemblyName>
+    <PackageId>AspNetCore.Security.CAS</PackageId>
+    <PackageTags>cas;jasig;middleware;authentication;security</PackageTags>
+    <PackageProjectUrl>https://github.com/IUCrimson/AspNet.Security.CAS</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/IUCrimson/AspNet.Security.CAS/blob/master/LICENSE.md</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/iuCrimson/aspnet.security.cas</RepositoryUrl>
+    <PackageTargetFallback Condition="'$(TargetFramework)' == 'netstandard1.5' ">$(PackageTargetFallback);portable-net45+win8+wp8+wpa81</PackageTargetFallback>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="1.1.1" />
+  </ItemGroup>
+
+</Project>
