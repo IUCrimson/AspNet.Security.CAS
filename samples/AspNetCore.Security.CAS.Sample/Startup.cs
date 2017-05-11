@@ -68,7 +68,7 @@ namespace AspNetCore.Security.CAS.Sample
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
             app.UseCasAuthentication(new CasOptions
             {
-                CasServerUrlBase = "https://mycas-server.edu/cas"
+                CasServerUrlBase = "http://jasigcas.herokuapp.com/cas" // casuser:Mellon
             });
 
             app.UseMvc(routes =>
