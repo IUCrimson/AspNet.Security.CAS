@@ -1,26 +1,27 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
 
 namespace AspNetCore.Security.CAS
 {
     /// <summary>
-    /// Default <see cref="ICasEvents"/> implementation.
+    /// Default  implementation.
     /// </summary>
-    public class CasEvents : RemoteAuthenticationEvents, ICasEvents
+    public class CasEvents : RemoteAuthenticationEvents
     {
         /// <summary>
         /// Gets or sets the function that is invoked when the Authenticated method is invoked.
         /// </summary>
-        public Func<CasCreatingTicketContext, Task> OnCreatingTicket { get; set; } = context => Task.FromResult(0);
+        public Func<CasCreatingTicketContext, Task> OnCreatingTicket { get; set; } = context => Task.CompletedTask;
 
         /// <summary>
         /// Gets or sets the delegate that is invoked when the ApplyRedirect method is invoked.
         /// </summary>
-        public Func<CasRedirectToAuthorizationEndpointContext, Task> OnRedirectToAuthorizationEndpoint { get; set; } = context =>
+        public Func<RedirectContext<CasOptions>, Task> OnRedirectToAuthorizationEndpoint { get; set; } = context =>
         {
             context.Response.Redirect(context.RedirectUri);
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         };
 
         /// <summary>
@@ -34,6 +35,6 @@ namespace AspNetCore.Security.CAS
         /// Called when a Challenge causes a redirect to authorize endpoint in the Cas middleware
         /// </summary>
         /// <param name="context">Contains redirect URI and <see cref="AuthenticationProperties"/> of the challenge </param>
-        public virtual Task RedirectToAuthorizationEndpoint(CasRedirectToAuthorizationEndpointContext context) => OnRedirectToAuthorizationEndpoint(context);
+        public virtual Task RedirectToAuthorizationEndpoint(RedirectContext<CasOptions> context) => OnRedirectToAuthorizationEndpoint(context);
     }
 }

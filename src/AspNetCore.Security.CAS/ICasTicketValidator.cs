@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
-using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 
 namespace AspNetCore.Security.CAS
 {
     public interface ICasTicketValidator
     {
-        Task<AuthenticateResult> ValidateTicket(HttpContext context, HttpClient httpClient, AuthenticationProperties properties, string ticket, string service);
+        Task<AuthenticationTicket> ValidateTicket(HttpContext context, AuthenticationProperties properties, AuthenticationScheme scheme, CasOptions options, string ticket, string service);
     }
 }

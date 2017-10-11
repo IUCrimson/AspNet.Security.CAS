@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
 using System;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -11,20 +9,14 @@ namespace AspNetCore.Security.CAS
 {
     public class Cas1TicketValidator : ICasTicketValidator
     {
-        private readonly CasOptions _options;
 
-        public Cas1TicketValidator(CasOptions options)
+        public async Task<AuthenticationTicket> ValidateTicket(HttpContext context, AuthenticationProperties properties, AuthenticationScheme scheme, CasOptions options, string ticket, string service)
         {
-            _options = options;
-        }
-
-        public async Task<AuthenticateResult> ValidateTicket(HttpContext context, HttpClient httpClient, AuthenticationProperties properties, string ticket, string service)
-        {
-            var validateUrl = _options.CasServerUrlBase + "/validate" +
+            var validateUrl = options.CasServerUrlBase + "/validate" +
                               "?service=" + service +
                               "&ticket=" + Uri.EscapeDataString(ticket);
 
-            var response = await httpClient.GetAsync(validateUrl, context.RequestAborted);
+            var response = await options.Backchannel.GetAsync(validateUrl, context.RequestAborted);
             response.EnsureSuccessStatusCode();
 
             var responseBody = await response.Content.ReadAsStringAsync();
@@ -38,26 +30,22 @@ namespace AspNetCore.Security.CAS
 
             if (string.IsNullOrEmpty(validatedUserName))
             {
-                return AuthenticateResult.Fail("Could find username in CAS response.");
+                return null;
             }
+            var issuer = options.ClaimsIssuer ?? scheme.Name;
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, validatedUserName, ClaimValueTypes.String, _options.ClaimsIssuer),
-                new Claim(ClaimTypes.Name, validatedUserName, ClaimValueTypes.String, _options.ClaimsIssuer)
+                new Claim(ClaimTypes.NameIdentifier, validatedUserName, ClaimValueTypes.String, issuer),
+                new Claim(ClaimTypes.Name, validatedUserName, ClaimValueTypes.String, issuer)
             };
 
-            var identity = new ClaimsIdentity(claims, _options.ClaimsIssuer);
+            var identity = new ClaimsIdentity(claims, options.ClaimsIssuer);
+            var ticketContext = new CasCreatingTicketContext(context, scheme, options, new ClaimsPrincipal(identity), properties, validatedUserName);
 
-            var ticketContext = new CasCreatingTicketContext(context, _options, identity.Name)
-            {
-                Principal = new ClaimsPrincipal(identity),
-                Properties = properties
-            };
+            await options.Events.CreatingTicket(ticketContext);
 
-            await _options.Events.CreatingTicket(ticketContext);
-
-            return AuthenticateResult.Success(new AuthenticationTicket(ticketContext.Principal, ticketContext.Properties, _options.AuthenticationScheme));
+            return new AuthenticationTicket(ticketContext.Principal, ticketContext.Properties, scheme.Name);
         }
     }
 }

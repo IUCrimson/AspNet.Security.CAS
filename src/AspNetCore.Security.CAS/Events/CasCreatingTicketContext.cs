@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
 using System.Security.Claims;
 
 namespace AspNetCore.Security.CAS
@@ -8,36 +8,34 @@ namespace AspNetCore.Security.CAS
     /// <summary>
     /// Contains information about the login session as well as the user <see cref="System.Security.Claims.ClaimsIdentity"/>.
     /// </summary>
-    public class CasCreatingTicketContext : BaseCasContext
+    public class CasCreatingTicketContext : ResultContext<CasOptions>
     {
         /// <summary>
         /// Initializes a <see cref="CasCreatingTicketContext"/>
         /// </summary>
         /// <param name="context">The HTTP environment</param>
+        /// <param name="scheme"></param>
         /// <param name="options"></param>
+        /// <param name="principal"></param>
+        /// <param name="properties"></param>
         /// <param name="userName">Cas user ID</param>
         public CasCreatingTicketContext(
             HttpContext context,
+            AuthenticationScheme scheme,
             CasOptions options,
+            ClaimsPrincipal principal,
+            AuthenticationProperties properties,
             string userName)
-            : base(context, options)
+            : base(context, scheme, options)
         {
             Username = userName;
+            Principal = principal;
+            Properties = properties;
         }
 
         /// <summary>
         /// Gets the Cas user ID
         /// </summary>
-        public string Username { get; private set; }
-
-        /// <summary>
-        /// Gets the <see cref="ClaimsPrincipal"/> representing the user
-        /// </summary>
-        public ClaimsPrincipal Principal { get; set; }
-
-        /// <summary>
-        /// Gets or sets a property bag for common authentication properties
-        /// </summary>
-        public AuthenticationProperties Properties { get; set; }
+        public string Username { get; }
     }
 }
