@@ -1,7 +1,6 @@
 ﻿using AspNetCore.Security.CAS;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using System;
 
 namespace Microsoft.AspNetCore.Builder
 {
@@ -10,7 +9,6 @@ namespace Microsoft.AspNetCore.Builder
         public CasOptions()
         {
             CallbackPath = new PathString("/signin-cas");
-            BackchannelTimeout = TimeSpan.FromSeconds(60);
             TicketValidator = new Cas2TicketValidator();
             Events = new CasEvents();
         }
