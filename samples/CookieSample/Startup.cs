@@ -31,7 +31,7 @@ namespace CookieSample
                 })
                 .AddCAS(o =>
                 {
-                    o.CasServerUrlBase = Configuration["CasBaseUrl"];
+                    o.CasServerUrlBase = Configuration["CasBaseUrl"];   // Set in `appsettings.json` file.
                     o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 });
 
