@@ -12,9 +12,8 @@ namespace AspNetCore.Security.CAS
 
         public async Task<AuthenticationTicket> ValidateTicket(HttpContext context, AuthenticationProperties properties, AuthenticationScheme scheme, CasOptions options, string ticket, string service)
         {
-            var validateUrl = options.CasServerUrlBase + "/validate" +
-                              "?service=" + service +
-                              "&ticket=" + Uri.EscapeDataString(ticket);
+            var validateEndpoint = string.IsNullOrEmpty(options.CasValidationUrl) ? $"{options.CasServerUrlBase}/validate" : options.CasValidationUrl;
+            var validateUrl = $"{validateEndpoint}?service={service}&ticket={Uri.EscapeDataString(ticket)}";
 
             var response = await options.Backchannel.GetAsync(validateUrl, context.RequestAborted);
             response.EnsureSuccessStatusCode();
