@@ -1,7 +1,7 @@
 AspNetCore.Security.CAS
 ===================
 
-AspNet.Security.CAS is an [ASP.NET Core 1/MVC 6](http://docs.asp.net/en/1.0.0-rc2/) authentication provider for [CAS](https://github.com/Jasig/cas).
+AspNet.Security.CAS is an [ASP.NET Core 2/MVC 6](https://docs.microsoft.com/en-us/aspnet/core/) authentication provider for [CAS](https://github.com/apereo/cascas).
 
 This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://github.com/noelbundick/Owin.Security.CAS) provider.
 
@@ -15,15 +15,38 @@ This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://
 
 1. Open **Startup.cs**
 
-1. Paste the following code below `// Uncomment the following lines to enable logging in with third party login providers`
+1. In your startup's `ConfigureServices` method:
 
+	```c#
+	services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+		.AddCookie(options =>
+		{
+			options.LoginPath = new PathString("/login");
+		})
+		.AddCAS(options =>
+		{
+			options.CasServerUrlBase = Configuration["CasBaseUrl"];   // Set in `appsettings.json` file.
+			options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+		});
+	```
+
+1. In your startup's `Configure` method before `UseMvc`:
 
     ```c#
-    app.UseCasAuthentication(new CasOptions
-    {
-        CasServerUrlBase = "https://your.cas.server.com/cas"
-    });
+    app.UseAuthentication();
     ```
+
+1. In a controller somewhere, create a login endpoint.  It doesn't have to auto-challenge/redirect but this example does:
+
+	```c#
+    [AllowAnonymous]
+    [Route("login")]
+    public async Task Login(string returnUrl)
+    {
+        var props = new AuthenticationProperties { RedirectUri = returnUrl };
+        await HttpContext.ChallengeAsync("CAS", props);
+    }
+	```
 
 ## CasOptions
 
@@ -34,6 +57,8 @@ These options extend the [RemoteAuthenticationOptions](https://github.com/aspnet
 **Properties**
 
 * `CasServerUrlBase` - The base url of the CAS server.  Required.
+
+* `CasValidationUrl` - Used in cases where ticket validation occurs on a separate server than user login.  Default: `null`
 
 * `TicketValidator` - Gets or sets the `ICasTicketValidator` used to validate tickets from CAS. Default: `Cas2TicketValidator`
 
