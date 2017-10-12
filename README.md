@@ -52,7 +52,7 @@ This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://
 
 At a minmum, the `CasOptions` object needs to have the `CasServerUrlBase` property set to the URL to your CAS server.
 
-These options extend the [RemoteAuthenticationOptions](https://github.com/aspnet/Security/blob/master/src/Microsoft.AspNetCore.Authentication/RemoteAuthenticationOptions.cs) class.
+These options extend the [RemoteAuthenticationOptions](https://github.com/aspnet/Security/blob/dev/src/Microsoft.AspNetCore.Authentication/RemoteAuthenticationOptions.cs) class.
 
 **Properties**
 
