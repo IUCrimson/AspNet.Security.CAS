@@ -23,7 +23,7 @@ namespace CookieSample
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
-                    o.LoginPath = new PathString("/login");
+                    o.LoginPath = new PathString("/account/login");
                     o.Cookie = new CookieBuilder
                     {
                         Name = ".AspNet.CasSample"
@@ -33,6 +33,7 @@ namespace CookieSample
                 {
                     o.CasServerUrlBase = Configuration["CasBaseUrl"];   // Set in `appsettings.json` file.
                     o.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    o.CallbackPath = new PathString("/account/cas-signin");
                 });
 
             services.AddMvc();

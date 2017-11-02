@@ -36,7 +36,7 @@ namespace CookieSample.Controllers
         /// the login page that it will send users to if they are not signed in.
         /// </summary>
         [AllowAnonymous]
-        [Route("login")]
+        [Route("account/login")]
         public async Task Login(string returnUrl)
         {
             var props = new AuthenticationProperties { RedirectUri = returnUrl };
