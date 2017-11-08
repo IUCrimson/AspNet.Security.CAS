@@ -3,15 +3,13 @@ AspNetCore.Security.CAS
 
 AspNet.Security.CAS is an [ASP.NET Core 2/MVC 6](https://docs.microsoft.com/en-us/aspnet/core/) authentication provider for [CAS](https://github.com/apereo/cascas).
 
-This implimentation is based upon on Noel Bundick's [Owin.Security.CAS](https://github.com/noelbundick/Owin.Security.CAS) provider.
-
 [Microsoft.AspNetCore.Authentication.OAuth](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Twitter) and [Microsoft.AspNetCore.Authentication.Twitter](https://github.com/aspnet/Security/tree/dev/src/Microsoft.AspNetCore.Authentication.Twitter) were used as structural references.
 
 ## Usage
 
 1. Install the NuGet package
 
-    `PM> Install-Package AspNet.Security.CAS`
+    `PM> Install-Package AspNetCore.Security.CAS`
 
 1. Open **Startup.cs**
 
