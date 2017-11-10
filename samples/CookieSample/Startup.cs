@@ -1,8 +1,10 @@
 ﻿using AspNetCore.Security.CAS;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,7 +28,7 @@ namespace CookieSample
                     o.LoginPath = new PathString("/login");
                     o.Cookie = new CookieBuilder
                     {
-                        Name = ".AspNet.CasSample"
+                        Name = ".AspNetCore.CasSample"
                     };
                 })
                 .AddCAS(o =>
@@ -36,6 +38,16 @@ namespace CookieSample
                 });
 
             services.AddMvc();
+            
+            //// You can make the site require Authorization on all endpoints by default:
+            //var globalAuthPolicy = new AuthorizationPolicyBuilder()
+            //    .RequireAuthenticatedUser()
+            //    .Build();
+
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add(new AuthorizeFilter(globalAuthPolicy));
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
