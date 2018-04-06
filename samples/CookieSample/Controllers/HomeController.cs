@@ -25,6 +25,12 @@ namespace CookieSample.Controllers
             return View();
         }
 
+        [HttpGet("access-denied")]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         /// <summary>
         /// The authorize tag can also be put on the controller level to require 
         /// authorization on all of the controller's actions.
@@ -34,7 +40,13 @@ namespace CookieSample.Controllers
         {
             return View();
         }
-       
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AdminOnly()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Immediately invokes a CAS challenge.  The Cookie middleware uses this page as
         /// the login page that it will send users to if they are not signed in.

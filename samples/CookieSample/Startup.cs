@@ -1,4 +1,6 @@
-﻿using AspNetCore.Security.CAS;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using AspNetCore.Security.CAS;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,9 +26,42 @@ namespace CookieSample
                 .AddCookie(o =>
                 {
                     o.LoginPath = new PathString("/login");
+
+                    o.AccessDeniedPath = new PathString("/access-denied");
+
                     o.Cookie = new CookieBuilder
                     {
                         Name = ".AspNetCore.CasSample"
+                    };
+
+                    o.Events = new CookieAuthenticationEvents
+                    {
+                        // Add user roles to the existing identity.  
+                        // This example is giving every user "User" and "Admin" roles.
+                        // You can use services or other logic here to determine actual roles for your users.
+                        OnSigningIn = context =>
+                        {
+                            // Use `GetRequiredService` if you have a service that is using DI or an EF Context.
+                            // var username = context.Principal.Identity.Name;
+                            // var userSvc = context.HttpContext.RequestServices.GetRequiredService<UserService>();
+                            // var roles = userSvc.GetRoles(username);
+                            
+                            // Hard coded roles.
+                            var roles = new[] { "User", "Admin" };
+
+                            // `AddClaim` is not available directly from `context.Principal.Identity`.
+                            // We can add a new empty identity with the roles we want to the principal. 
+                            var identity = new ClaimsIdentity();
+                            
+                            foreach (var role in roles)
+                            {
+                                identity.AddClaim(new Claim(ClaimTypes.Role, role));
+                            }
+
+                            context.Principal.AddIdentity(identity);
+
+                            return Task.FromResult(0);
+                        }
                     };
                 })
                 .AddCAS(o =>
