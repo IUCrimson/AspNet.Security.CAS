@@ -49,6 +49,29 @@ namespace Microsoft.AspNetCore.Builder
         public ICasTicketValidator TicketValidator { get; set; }
 
         /// <summary>
+        /// [OPTIONAL] - If this parameter is set, single sign-on will be bypassed. 
+        /// In this case, CAS will require the client to present credentials regardless of the existence of a single sign-on session with CAS. 
+        /// This parameter is not compatible with the `gateway` parameter. Services redirecting to the /login URI and login form views posting 
+        /// to the /login URI SHOULD NOT set both the `renew` and `gateway` request parameters. Behavior is undefined if both are set. It is 
+        /// RECOMMENDED that CAS implementations ignore the `gateway` parameter if `renew` is set. It is RECOMMENDED that when the renew 
+        /// parameter is set itsvalue be `true`.
+        /// </summary>
+        public bool Renew { get; set; }
+
+        /// <summary>
+        /// [OPTIONAL] - If this parameter is set, CAS will not ask the client for credentials. If the client has a pre-existing single sign-on
+        /// session with CAS, or if a single sign-on session can be established through non-interactive means (i.e. trust authentication), CAS
+        /// MAY redirect the client to the URL specified by the `service` parameter, appending a valid service ticket. (CAS also MAY interpose 
+        /// an advisory page informing the client that a CAS authentication has taken place.) If the client does not have a single sign-on session 
+        /// with CAS, and a non-interactive authentication cannot be established, CAS MUST redirect the client to the URL specified by the `service` 
+        /// parameter with no `ticket` parameter appended to the URL. If the `service` parameter is not specified and `gateway` is set, the behavior 
+        /// of CAS is undefined. It is RECOMMENDED that in this case, CAS request credentials as if neither parameter was specified. This parameter 
+        /// is not compatible with the `renew` parameter. Behavior is undefined if both are set. It is RECOMMENDED that when the gateway parameter 
+        /// is set its value be `true`.
+        /// </summary>
+        public bool Gateway { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="CasEvents"/> used to handle authentication events.
         /// </summary>
         public new CasEvents Events

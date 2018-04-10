@@ -73,6 +73,17 @@ namespace AspNetCore.Security.CAS
 
             var returnTo = BuildReturnTo(Options.StateDataFormat.Protect(properties));
             var authorizationEndpoint = $"{Options.CasServerUrlBase}/login?service={Uri.EscapeDataString(returnTo)}";
+
+            if (Options.Renew)
+            {
+                authorizationEndpoint += "&renew=true";
+            }
+
+            if (Options.Gateway)
+            {
+                authorizationEndpoint += "&gateway=true";
+            }
+
             var redirectContext = new RedirectContext<CasOptions>(Context, Scheme, Options, properties, authorizationEndpoint);
 
             await Options.Events.RedirectToAuthorizationEndpoint(redirectContext);
