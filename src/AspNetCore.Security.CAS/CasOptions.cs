@@ -72,6 +72,18 @@ namespace Microsoft.AspNetCore.Builder
         public bool Gateway { get; set; }
 
         /// <summary>
+        /// Specify the domain name used in the `service` parameter.
+        /// <para />
+        /// The default behavior to build the `service` parameter uses `Request.Host`, however, in certain containerized hosting scenarios this
+        /// value may resolve to the container name instead of the public facing domain name.
+        /// <para />
+        /// See: https://github.com/IUCrimson/AspNet.Security.CAS/issues/16
+        /// </summary>
+        /// <remarks>Trailing slashes will be stripped.</remarks>
+        /// <example>www.mywebsite.com</example>
+        public string ServiceHost { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="CasEvents"/> used to handle authentication events.
         /// </summary>
         public new CasEvents Events

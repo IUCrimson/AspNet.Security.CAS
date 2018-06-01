@@ -36,7 +36,7 @@ namespace CookieSample.Controllers
         /// authorization on all of the controller's actions.
         /// </summary>
         [Authorize]
-        public IActionResult AuthorizedPage()
+        public IActionResult AuthorizedPage(string foo)
         {
             return View();
         }

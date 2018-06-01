@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace AspNetCore.Security.CAS
 {
@@ -91,8 +92,17 @@ namespace AspNetCore.Security.CAS
 
         private string BuildReturnTo(string state)
         {
-            return Request.Scheme + "://" + Request.Host +
-                   Request.PathBase + Options.CallbackPath +
+            var host = Request.Host;
+
+            if (!string.IsNullOrWhiteSpace(Options.ServiceHost))
+            {
+                host = new HostString(Options.ServiceHost.Replace("/", ""));
+            }
+
+            return Request.Scheme + "://" + 
+                   host +
+                   Request.PathBase + 
+                   Options.CallbackPath +
                    "?state=" + Uri.EscapeDataString(state);
         }
     }
