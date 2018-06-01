@@ -93,13 +93,19 @@ namespace AspNetCore.Security.CAS
         private string BuildReturnTo(string state)
         {
             var host = Request.Host;
+            var scheme = Request.Scheme;
 
             if (!string.IsNullOrWhiteSpace(Options.ServiceHost))
             {
                 host = new HostString(Options.ServiceHost.Replace("/", ""));
             }
 
-            return Request.Scheme + "://" + 
+            // Check if option was set to force https
+            if (Options.ServiceForceHTTPS) {
+                scheme = "https";
+            }
+
+            return scheme + "://" + 
                    host +
                    Request.PathBase + 
                    Options.CallbackPath +

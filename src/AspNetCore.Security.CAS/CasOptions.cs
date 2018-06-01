@@ -84,6 +84,17 @@ namespace Microsoft.AspNetCore.Builder
         public string ServiceHost { get; set; }
 
         /// <summary>
+        /// Force the URI in the `service` parameter to use HTTPS.
+        /// <para />
+        /// The default behavior to build the `service` parameter uses `Request.Scheme`, however, in certain reverse-proxied environments this
+        /// value may not reflect the original public address of the URI.
+        /// <para />
+        /// See: https://github.com/IUCrimson/AspNet.Security.CAS/issues/17
+        /// </summary>
+        /// <example>true</example>
+        public bool ServiceForceHTTPS { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets the <see cref="CasEvents"/> used to handle authentication events.
         /// </summary>
         public new CasEvents Events
