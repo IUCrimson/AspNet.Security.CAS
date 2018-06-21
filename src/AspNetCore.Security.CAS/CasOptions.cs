@@ -36,7 +36,7 @@ namespace Microsoft.AspNetCore.Builder
         /// </summary>
         /// <example>https://cas.example.com/cas/serviceValidate</example>
         public string CasValidationUrl { get; set; }
-        
+
         /// <summary>
         /// If set, and using the CAS 2 payload, the ticket validator use the specified CAS attribute as
         /// the NameIdentifier claim, which is used to associate external logins
@@ -99,10 +99,10 @@ namespace Microsoft.AspNetCore.Builder
         /// </summary>
         public new CasEvents Events
         {
-            get => (CasEvents) base.Events;
+            get => (CasEvents)base.Events;
             set => base.Events = value;
         }
-        
+
         /// <summary>
         /// Gets or sets the type used to secure data handled by the middleware.
         /// </summary>

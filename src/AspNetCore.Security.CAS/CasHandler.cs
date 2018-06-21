@@ -39,26 +39,26 @@ namespace AspNetCore.Security.CAS
             {
                 return HandleRequestResult.Fail("The state was missing or invalid.");
             }
-            
+
             // OAuth2 10.12 CSRF
             if (!ValidateCorrelationId(properties))
             {
                 return HandleRequestResult.Fail("Correlation failed.");
             }
-            
+
             var casTicket = query["ticket"];
             if (string.IsNullOrEmpty(casTicket))
             {
                 return HandleRequestResult.Fail("Missing CAS ticket.");
             }
-            
+
             var casService = Uri.EscapeDataString(BuildReturnTo(state));
             var authTicket = await Options.TicketValidator.ValidateTicket(Context, properties, Scheme, Options, casTicket, casService);
             if (authTicket == null)
             {
                 return HandleRequestResult.Fail("Failed to retrieve user information from remote server.");
             }
-            
+
             return HandleRequestResult.Success(authTicket);
         }
 
@@ -100,14 +100,14 @@ namespace AspNetCore.Security.CAS
                 host = new HostString(Options.ServiceHost.Replace("/", ""));
             }
 
-            // Check if option was set to force https
-            if (Options.ServiceForceHTTPS) {
+            if (Options.ServiceForceHTTPS)
+            {
                 scheme = "https";
             }
 
-            return scheme + "://" + 
+            return scheme + "://" +
                    host +
-                   Request.PathBase + 
+                   Request.PathBase +
                    Options.CallbackPath +
                    "?state=" + Uri.EscapeDataString(state);
         }
