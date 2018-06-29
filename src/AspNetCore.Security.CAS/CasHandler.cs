@@ -52,8 +52,7 @@ namespace AspNetCore.Security.CAS
                 return HandleRequestResult.Fail("Missing CAS ticket.");
             }
 
-            var casService = Options.EscapeServiceString ? Uri.EscapeDataString(BuildReturnTo(state)) : BuildReturnTo(state);
-            var authTicket = await Options.TicketValidator.ValidateTicket(Context, properties, Scheme, Options, casTicket, casService);
+            var authTicket = await Options.TicketValidator.ValidateTicket(Context, properties, Scheme, Options, casTicket, BuildReturnTo(state));
             if (authTicket == null)
             {
                 return HandleRequestResult.Fail("Failed to retrieve user information from remote server.");
@@ -73,10 +72,7 @@ namespace AspNetCore.Security.CAS
             GenerateCorrelationId(properties);
 
             var returnTo = BuildReturnTo(Options.StateDataFormat.Protect(properties));
-            if (Options.EscapeServiceString)
-            {
-                returnTo = Uri.EscapeDataString(returnTo);
-            }
+
             var authorizationEndpoint = $"{Options.CasServerUrlBase}/login?service={returnTo}";
 
             if (Options.Renew)
@@ -109,11 +105,9 @@ namespace AspNetCore.Security.CAS
                 scheme = "https";
             }
 
-            return scheme + "://" +
-                   host +
-                   Request.PathBase +
-                   Options.CallbackPath +
-                   "?state=" + Uri.EscapeDataString(state);
+            var returnTo = $"{scheme}://{host}{Request.PathBase}{Options.CallbackPath}?state={Uri.EscapeDataString(state)}";
+
+            return Options.EscapeServiceString ? Uri.EscapeDataString(returnTo) : returnTo;
         }
     }
 }
