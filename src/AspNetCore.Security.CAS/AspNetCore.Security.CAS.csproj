@@ -6,7 +6,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>AspNetCore.Security.CAS</AssemblyName>
     <PackageId>AspNetCore.Security.CAS</PackageId>
-    <PackageTags>cas;jasig;middleware;authentication;security</PackageTags>
+    <PackageTags>cas;apereo;middleware;authentication;security;aspnet;dotnet</PackageTags>
     <PackageProjectUrl>https://github.com/IUCrimson/AspNet.Security.CAS</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/IUCrimson/AspNet.Security.CAS/blob/master/LICENSE.md</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
@@ -18,8 +18,8 @@
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
     <GenerateAssemblyCopyrightAttribute>false</GenerateAssemblyCopyrightAttribute>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.0.3</Version>
-    <FileVersion>2.0.3.0</FileVersion>
+    <Version>2.0.4</Version>
+    <FileVersion>2.0.4.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
