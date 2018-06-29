@@ -52,7 +52,7 @@ namespace AspNetCore.Security.CAS
                 return HandleRequestResult.Fail("Missing CAS ticket.");
             }
 
-            var casService = Uri.EscapeDataString(BuildReturnTo(state));
+            var casService = Options.EscapeServiceString ? Uri.EscapeDataString(BuildReturnTo(state)) : BuildReturnTo(state);
             var authTicket = await Options.TicketValidator.ValidateTicket(Context, properties, Scheme, Options, casTicket, casService);
             if (authTicket == null)
             {
@@ -73,7 +73,11 @@ namespace AspNetCore.Security.CAS
             GenerateCorrelationId(properties);
 
             var returnTo = BuildReturnTo(Options.StateDataFormat.Protect(properties));
-            var authorizationEndpoint = $"{Options.CasServerUrlBase}/login?service={Uri.EscapeDataString(returnTo)}";
+            if (Options.EscapeServiceString)
+            {
+                returnTo = Uri.EscapeDataString(returnTo);
+            }
+            var authorizationEndpoint = $"{Options.CasServerUrlBase}/login?service={returnTo}";
 
             if (Options.Renew)
             {

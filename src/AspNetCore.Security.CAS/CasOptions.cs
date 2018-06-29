@@ -95,6 +95,15 @@ namespace Microsoft.AspNetCore.Builder
         public bool ServiceForceHTTPS { get; set; } = false;
 
         /// <summary>
+        /// Escape the the service parameter string when sending requests to the CAS server
+        /// <para />
+        /// The default behavior to build the `service uri` is to escape, however, not all CAS
+        /// server implementations will decode this value on receiving it.
+        /// </summary>
+        /// <example>false</example>
+        public bool EscapeServiceString { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the <see cref="CasEvents"/> used to handle authentication events.
         /// </summary>
         public new CasEvents Events
