@@ -15,6 +15,7 @@ namespace AspNetCore.Security.CAS
 
         public async Task<AuthenticationTicket> ValidateTicket(HttpContext context, AuthenticationProperties properties, AuthenticationScheme scheme, CasOptions options, string ticket, string service)
         {
+
             var validateEndpoint = string.IsNullOrEmpty(options.CasValidationUrl) ? $"{options.CasServerUrlBase}/serviceValidate" : options.CasValidationUrl;
             var validateUrl = $"{validateEndpoint}?service={service}&ticket={Uri.EscapeDataString(ticket)}";
 
@@ -24,9 +25,11 @@ namespace AspNetCore.Security.CAS
             var responseBody = await response.Content.ReadAsStringAsync();
             var doc = XDocument.Parse(responseBody);
 
-            var serviceResponse = doc.Element(_ns + "serviceResponse");
-            var successNode = serviceResponse?.Element(_ns + "authenticationSuccess");
-            var userNode = successNode?.Element(_ns + "user");
+            XNamespace ns = string.IsNullOrEmpty(options.TicketNamespace) ? _ns : options.TicketNamespace;
+
+            var serviceResponse = doc.Element(ns + "serviceResponse");
+            var successNode = serviceResponse?.Element(ns + "authenticationSuccess");
+            var userNode = successNode?.Element(ns + "user");
             var validatedUserName = userNode?.Value;
 
             if (string.IsNullOrEmpty(validatedUserName))
@@ -34,7 +37,7 @@ namespace AspNetCore.Security.CAS
                 return null;
             }
 
-            var identity = BuildIdentity(options, scheme, validatedUserName, successNode);
+            var identity = BuildIdentity(options, scheme, validatedUserName, successNode, ns);
             var ticketContext = new CasCreatingTicketContext(context, scheme, options, new ClaimsPrincipal(identity), properties, validatedUserName);
 
             await options.Events.CreatingTicket(ticketContext);
@@ -42,14 +45,15 @@ namespace AspNetCore.Security.CAS
             return new AuthenticationTicket(ticketContext.Principal, ticketContext.Properties, scheme.Name);
         }
 
-        private ClaimsIdentity BuildIdentity(CasOptions options, AuthenticationScheme scheme, string username, XContainer successNode)
+        private ClaimsIdentity BuildIdentity(CasOptions options, AuthenticationScheme scheme, string username, XContainer successNode, XNamespace ns)
         {
             var issuer = options.ClaimsIssuer ?? scheme.Name;
 
             var identity = new ClaimsIdentity(issuer);
             identity.AddClaim(new Claim(ClaimTypes.Name, username, ClaimValueTypes.String, issuer));
 
-            var attributesNode = successNode.Element(_ns + "attributes");
+            var attributesParent = string.IsNullOrEmpty(options.AttributesParent) ? "attributes" : options.AttributesParent;
+            var attributesNode = successNode.Element(ns + attributesParent);
             if (attributesNode != null)
             {
                 foreach (var element in attributesNode.Elements())

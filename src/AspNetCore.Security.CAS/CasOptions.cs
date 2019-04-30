@@ -38,10 +38,21 @@ namespace Microsoft.AspNetCore.Builder
         public string CasValidationUrl { get; set; }
 
         /// <summary>
-        /// If set, and using the CAS 2 payload, the ticket validator use the specified CAS attribute as
+        /// If set, and using the CAS 2 payload, the ticket validator uses the specified CAS attribute as
         /// the NameIdentifier claim, which is used to associate external logins
         /// </summary>
         public string NameIdentifierAttribute { get; set; }
+
+        /// <summary>
+        /// If set, and using the CAS 2 payload, the ticket validator uses the specified namespace when parsing the ticket
+        /// </summary>
+        public string TicketNamespace { get; set; }
+
+        /// <summary>
+        /// If set, and using the CAS 2 payload, the ticket validator uses the children of the specified CAS attribute as
+        /// additional claims
+        /// </summary>
+        public string AttributesParent { get; set; }
 
         /// <summary>
         /// Used by <see cref="CasHandler"/> to validate the CAS ticket and return an AuthenticationTicket with the user's CAS identity.
