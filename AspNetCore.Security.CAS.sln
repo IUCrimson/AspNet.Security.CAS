@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.16
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BF6C1402-5082-48F3-B29B-0B3D3C6656DC}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCore.Security.CAS", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookieSample", "samples\CookieSample\CookieSample.csproj", "{7731952F-4C18-43A8-B0F5-9BC59B9FA33C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentitySample", "samples\IdentitySample\IdentitySample.csproj", "{0A9C10E4-1AB8-41E6-8552-928784F3E2DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentitySample", "samples\IdentitySample\IdentitySample.csproj", "{0A9C10E4-1AB8-41E6-8552-928784F3E2DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorSample", "samples\BlazorSample\BlazorSample.csproj", "{B8B5CDB9-C110-4CFE-9D67-6AFA8FECBBF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +39,10 @@ Global
 		{0A9C10E4-1AB8-41E6-8552-928784F3E2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A9C10E4-1AB8-41E6-8552-928784F3E2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A9C10E4-1AB8-41E6-8552-928784F3E2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8B5CDB9-C110-4CFE-9D67-6AFA8FECBBF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8B5CDB9-C110-4CFE-9D67-6AFA8FECBBF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8B5CDB9-C110-4CFE-9D67-6AFA8FECBBF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8B5CDB9-C110-4CFE-9D67-6AFA8FECBBF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -45,6 +51,7 @@ Global
 		{5CCC30FF-FFCE-432B-A4BD-046994C5F69D} = {A495669B-70A4-409C-86F2-562E2B2F293F}
 		{7731952F-4C18-43A8-B0F5-9BC59B9FA33C} = {AA04CCAE-3074-4C92-BECA-469B173907D5}
 		{0A9C10E4-1AB8-41E6-8552-928784F3E2DE} = {AA04CCAE-3074-4C92-BECA-469B173907D5}
+		{B8B5CDB9-C110-4CFE-9D67-6AFA8FECBBF2} = {AA04CCAE-3074-4C92-BECA-469B173907D5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61618C16-107E-41A6-91FD-5A301409406C}
